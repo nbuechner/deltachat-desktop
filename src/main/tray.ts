@@ -79,12 +79,12 @@ function quitDeltaChat() {
 
 export function updateTrayIcon() {
   // User doesn't want tray icon => destroy it
-  if (!app.rc['minimized'] && DesktopSettings.state.minimizeToTray !== true) {
+  //if (!app.rc['minimized'] && DesktopSettings.state.minimizeToTray !== true) {
     if (tray != null) destroyTrayIcon()
     return
-  }
+  //}
 
-  renderTrayIcon()
+  //renderTrayIcon()
 }
 
 function destroyTrayIcon() {
