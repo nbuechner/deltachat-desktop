@@ -109,6 +109,7 @@ export function init(options: { hidden: boolean }) {
     'mediaKeySystem',
     'accessibility-events',
     'clipboard-sanitized-write',
+    'camera',
     // not used:
     //  "display-capture", - not used
     //  "geolocation", - not used
@@ -119,18 +120,17 @@ export function init(options: { hidden: boolean }) {
     //  "window-placement"
   ]
   type permission_arg = Parameters<
-    Exclude<Parameters<Session['setPermissionRequestHandler']>[0], null>
-  >[1]
+    Exclude<Parameters<Session['setPermissionRequestHandler']>[0], null>>[1]
   const permission_handler = (permission: permission_arg) => {
-    log.info('preq', permission)
-    if (!allowed_web_permissions.includes(permission)) {
-      log.info(
-        `main window requested "${permission}" permission, but we denied it, because it is not in the list of allowed permissions.`
-      )
-      return false
-    } else {
-      return true
-    }
+   log.info('preq', permission)
+   if (!allowed_web_permissions.includes(permission as any)) {
+     log.info(
+       `main window requested "${permission}" permission, but we denied it, because it is not in the list of allowed permissions.`
+     )
+     return false
+   } else {
+     return true
+   }
   }
   window.webContents.session.setPermissionCheckHandler((_wc, permission) => {
     if (systemPreferences.getMediaAccessStatus && permission === 'camera') {
