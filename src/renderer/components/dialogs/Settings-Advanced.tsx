@@ -31,12 +31,10 @@ export function SettingsAdvanced({
       <SettingsManageKeys />
       <br />
       <br />
-      {/* 
       <SettingsTrayIcon
         settingsStore={settingsStore}
         renderDTSettingSwitch={renderDTSettingSwitch}
       />
-      */}
       <br />
       <br />
       <H5>{tx('pref_experimental_features')}</H5>
