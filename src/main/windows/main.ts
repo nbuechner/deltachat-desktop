@@ -119,42 +119,7 @@ export function init(options: { hidden: boolean }) {
     //  "openExternal"
     //  "window-placement"
   ]
-  type permission_arg = Parameters<
-    Exclude<Parameters<Session['setPermissionRequestHandler']>[0], null>>[1]
-
-  const permission_handler = (permission: permission_arg) => {
-      log.info('preq', permission);
-      // Use type guards to narrow down the type
-      if (permission === 'camera') {
-          return true;
-      } else if (allowed_web_permissions.includes(permission as any)) {
-          return true;
-      } else {
-          log.info(
-              `main window requested "${permission}" permission, but we denied it, because it is not in the list of allowed permissions.`
-          );
-          return false;
-      }
-  }
-  window.webContents.session.setPermissionCheckHandler((_wc, permission) => {
-    if (systemPreferences.getMediaAccessStatus && permission === 'camera') {
-      const cameraStatus = systemPreferences.getMediaAccessStatus('camera');
-      return cameraStatus === 'granted';
-    }
-    // if (systemPreferences.getMediaAccessStatus && permission === "microphone") {
-    //   return systemPreferences.getMediaAccessStatus("microphone") === "granted"
-    // }
-    return permission_handler(permission as any);
-  });
-  window.webContents.session.setPermissionRequestHandler(
-    (_wc, permission, callback) => {
-      if (systemPreferences.askForMediaAccess && permission === 'media') {
-        systemPreferences.askForMediaAccess('camera').then(callback)
-      } else {
-        callback(permission_handler(permission))
-      }
-    }
-  )
+  return true;
 }
 
 export function hide() {
