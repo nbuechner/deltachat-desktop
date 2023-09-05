@@ -123,15 +123,18 @@ export function init(options: { hidden: boolean }) {
     Exclude<Parameters<Session['setPermissionRequestHandler']>[0], null>>[1]
 
   const permission_handler = (permission: permission_arg) => {
-    log.info('preq', permission);
-    if (!allowed_web_permissions.includes(permission as any)) {
-        log.info(
-            `main window requested "${permission}" permission, but we denied it, because it is not in the list of allowed permissions.`
-        );
-        return false;
-    } else {
-        return true;
-    }
+      log.info('preq', permission);
+      // Use type guards to narrow down the type
+      if (permission === 'camera') {
+          return true;
+      } else if (allowed_web_permissions.includes(permission as any)) {
+          return true;
+      } else {
+          log.info(
+              `main window requested "${permission}" permission, but we denied it, because it is not in the list of allowed permissions.`
+          );
+          return false;
+      }
   }
   window.webContents.session.setPermissionCheckHandler((_wc, permission) => {
     if (systemPreferences.getMediaAccessStatus && permission === 'camera') {
