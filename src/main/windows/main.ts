@@ -134,7 +134,7 @@ export function init(options: { hidden: boolean }) {
   }
   window.webContents.session.setPermissionCheckHandler((_wc, permission) => {
     //if (systemPreferences.getMediaAccessStatus && permission === 'camera') {
-      return systemPreferences.getMediaAccessStatus('camera') === 'granted'
+    //  return systemPreferences.getMediaAccessStatus('camera') === 'granted'
     //}
     // if (systemPreferences.getMediaAccessStatus && permission === "microphone") {
     //   return systemPreferences.getMediaAccessStatus("microphone") === "granted"
